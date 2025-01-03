@@ -37,6 +37,7 @@ module.exports = {
         "Tu sais que tu rigoles à ta propre blague, mais tout le monde ici se demande : ‘Pourquoi ?’. 😂",
         "Rien de tel qu'un rire nerveux après avoir fait une grosse bêtise. 😂",
         "Ton rire est presque aussi gênant que ta tentative d'être drôle. Mais on fait avec ! 😅",
+        "Arrête de rire une mouche risque de faire popo dans ta bouche. 😊",
       ];
 
       const randomIndex = Math.floor(Math.random() * responses.length);
