@@ -2,7 +2,7 @@ module.exports = {
     config: {
         name: "prefix",
         version: "1.2",
-        author: "XxGhostxx",
+        author: "Fadil",
         countDown: 5,
         role: 0,
         shortDescription: "Affiche le préfixe du bot",
@@ -12,32 +12,38 @@ module.exports = {
     onStart: async function () {
         // Code à exécuter au démarrage du module, si nécessaire
     },
-    onChat: async function ({ event, message, getLang }) {
+    onChat: async function ({ event, message, getLang, role }) {
         if (event.body && event.body.toLowerCase() === "prefix") {
-            // Liste étendue des réponses possibles
-            const responses = [
-                "MON PREFIX EST [%]",
-                "Tu veux connaître mon prefix ? C'est 👉% !",
-                "Utilise [%], c'est mon prefix",
-                "Facile : mon prefix est [%] !",
-                "Ah, tu l’as oublié ? C’est [%]",
-                "Le secret ? Mon prefix est [%]",
-                "Je te donne un indice... [%]",
-                "Tu me cherches ? Utilise [%] pour m’appeler !",
-                "Mon préfixe préféré ? [%]",
-                "C’est pas compliqué, c’est [%]",
-                "Tu rêves de moi ? Utilise [%] !",
-                "Besoin d'aide ? Mon prefix est [%]",
-                "Hey, c’est % qu’il faut taper !",
-                "Un bot comme moi mérite un prefix stylé : [%].",
-                "Petit rappel : [%] est mon prefix."
+            // Liste étendue des réponses possibles pour les lambda
+            const lambdaResponses = [
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Mon prefix est %1, ne l'oublie jamais 😡",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Tu veux connaître mon prefix ? C'est 👉 %1 ! 😤",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Ah, tu l’as oublié ? C’est %1 😡",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Utilise %1, c’est mon prefix ! 😑",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Le secret ? Mon prefix est %1 😤",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Mon préfixe préféré ? %1 😒"
             ];
 
-            // Sélectionner une réponse aléatoire
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            // Liste étendue des réponses possibles pour les admins
+            const adminResponses = [
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Mon prefix est '/' maître, vous aviez le droit de demander.",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Comme demandé, mon prefix est '/' maître.",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Il n'y a pas de secret, mon prefix est '/' maître, vous avez le droit de demander.",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Bien sûr, mon prefix est '/' maître, il vous appartient.",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Mon prefix est '/' maître, comme convenu.",
+                "\n.   /)    /)───────◆\n.  (｡•ㅅ•｡)  ━╬٨ـﮩ𝕌𝕔𝕙𝕚𝕨𝕒𝕓𝕠𝕥ﮩ❤٨ـﮩﮩـ╬━\n╭∪─∪───────◆\n╰ Vous l'avez demandé, mon prefix est '/' maître."
+            ];
 
-            // Envoyer la réponse
-            return message.reply(randomResponse);
+            // Si l'utilisateur est un admin, répondre avec les réponses respectueuses
+            if (role >= 2) {
+                // Sélectionner une réponse aléatoire pour les admins
+                const randomAdminResponse = adminResponses[Math.floor(Math.random() * adminResponses.length)];
+                return message.reply(randomAdminResponse);
+            } else {
+                // Sélectionner une réponse aléatoire pour les lambda
+                const randomLambdaResponse = lambdaResponses[Math.floor(Math.random() * lambdaResponses.length)];
+                return message.reply(randomLambdaResponse);
+            }
         }
     }
 };
